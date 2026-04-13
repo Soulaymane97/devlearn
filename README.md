@@ -1,2 +1,2 @@
 # devlearn
-Create un site Web pour HTML, CSS, JS, python et django
+Crée un site Web pour HTML, CSS, JS, Python et Django
