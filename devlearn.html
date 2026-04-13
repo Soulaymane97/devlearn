@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevLearn — HTML · CSS · JS · Python · Django</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --surface: #16161f;
+    --border: #2a2a3a;
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --accent: #7c3aed;
+    --accent2: #06b6d4;
+    --html: #e34c26;
+    --css: #264de4;
+    --js: #f0db4f;
+    --py: #3776ab;
+    --dj: #092e20;
+    --dj2: #44b78b;
+    --glow: rgba(124,58,237,0.3);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID NOISE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(124,58,237,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,58,237,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .nav-links a:hover {
+    color: var(--text);
+    border-color: var(--border);
+    background: var(--surface);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    z-index: 1;
+  }
+
+  .hero-orb {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.7rem;
+    color: var(--accent2);
+    border: 1px solid rgba(6,182,212,0.3);
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+    background: rgba(6,182,212,0.05);
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent2);
+    animation: blink 1.2s infinite;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 7vw, 6rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-family: 'Fira Code', monospace;
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-stack {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 3rem;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .tech-pill {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    border: 1px solid;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-decoration: none;
+  }
+
+  .pill-html { color: var(--html); border-color: rgba(227,76,38,0.3); background: rgba(227,76,38,0.06); }
+  .pill-html:hover { background: rgba(227,76,38,0.15); box-shadow: 0 0 20px rgba(227,76,38,0.2); }
+  .pill-css { color: var(--css); border-color: rgba(38,77,228,0.3); background: rgba(38,77,228,0.06); }
+  .pill-css:hover { background: rgba(38,77,228,0.15); box-shadow: 0 0 20px rgba(38,77,228,0.2); }
+  .pill-js { color: var(--js); border-color: rgba(240,219,79,0.3); background: rgba(240,219,79,0.06); }
+  .pill-js:hover { background: rgba(240,219,79,0.15); box-shadow: 0 0 20px rgba(240,219,79,0.2); }
+  .pill-py { color: #5a9fd4; border-color: rgba(55,118,171,0.3); background: rgba(55,118,171,0.06); }
+  .pill-py:hover { background: rgba(55,118,171,0.15); box-shadow: 0 0 20px rgba(55,118,171,0.2); }
+  .pill-dj { color: var(--dj2); border-color: rgba(68,183,139,0.3); background: rgba(68,183,139,0.06); }
+  .pill-dj:hover { background: rgba(68,183,139,0.15); box-shadow: 0 0 20px rgba(68,183,139,0.2); }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s;
+    animation: fadeUp 0.8s 0.4s ease both;
+    box-shadow: 0 0 30px rgba(124,58,237,0.4);
+  }
+
+  .hero-cta:hover {
+    background: #6d28d9;
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(124,58,237,0.5);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTIONS ── */
+  section { position: relative; z-index: 1; padding: 6rem 2rem; }
+
+  .section-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.7rem;
+    color: var(--accent2);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+  }
+
+  .section-desc {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 500px;
+  }
+
+  /* ── TECH CARDS ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 4rem auto 0;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 16px;
+  }
+
+  .card:hover { transform: translateY(-4px); border-color: transparent; }
+  .card:hover::before { opacity: 1; }
+
+  .card-html::before { background: linear-gradient(135deg, rgba(227,76,38,0.08), transparent); box-shadow: inset 0 0 0 1px rgba(227,76,38,0.4); }
+  .card-html:hover { box-shadow: 0 20px 60px rgba(227,76,38,0.15); }
+  .card-css::before { background: linear-gradient(135deg, rgba(38,77,228,0.08), transparent); box-shadow: inset 0 0 0 1px rgba(38,77,228,0.4); }
+  .card-css:hover { box-shadow: 0 20px 60px rgba(38,77,228,0.15); }
+  .card-js::before { background: linear-gradient(135deg, rgba(240,219,79,0.08), transparent); box-shadow: inset 0 0 0 1px rgba(240,219,79,0.4); }
+  .card-js:hover { box-shadow: 0 20px 60px rgba(240,219,79,0.15); }
+  .card-py::before { background: linear-gradient(135deg, rgba(55,118,171,0.08), transparent); box-shadow: inset 0 0 0 1px rgba(55,118,171,0.4); }
+  .card-py:hover { box-shadow: 0 20px 60px rgba(55,118,171,0.15); }
+  .card-dj::before { background: linear-gradient(135deg, rgba(68,183,139,0.08), transparent); box-shadow: inset 0 0 0 1px rgba(68,183,139,0.4); }
+  .card-dj:hover { box-shadow: 0 20px 60px rgba(68,183,139,0.15); }
+
+  .card-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+    font-weight: 700;
+    font-family: 'Fira Code', monospace;
+  }
+
+  .card-html .card-icon { background: rgba(227,76,38,0.12); color: var(--html); }
+  .card-css .card-icon { background: rgba(38,77,228,0.12); color: var(--css); }
+  .card-js .card-icon { background: rgba(240,219,79,0.12); color: var(--js); font-size: 1.2rem; }
+  .card-py .card-icon { background: rgba(55,118,171,0.12); color: #5a9fd4; }
+  .card-dj .card-icon { background: rgba(68,183,139,0.12); color: var(--dj2); font-size: 1.1rem; }
+
+  .card h3 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-sub {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .card p {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .topic-tag {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  /* ── CODE BLOCK SECTION ── */
+  #code-demo {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .demo-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .demo-tabs {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .demo-tab {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.72rem;
+    padding: 0.6rem 1rem;
+    border: none;
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    margin-bottom: -1px;
+  }
+
+  .demo-tab.active { color: var(--text); border-bottom-color: var(--accent); }
+  .demo-tab:hover:not(.active) { color: var(--text); }
+
+  .code-window {
+    background: #0d0d14;
+    border: 1px solid var(--border);
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+  }
+
+  .code-body {
+    padding: 1.5rem;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.78rem;
+    line-height: 1.9;
+    color: #c9d1d9;
+    display: none;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  .code-body.active { display: block; }
+
+  .kw { color: #ff7b72; }
+  .fn { color: #79c0ff; }
+  .str { color: #a5d6ff; }
+  .cm { color: #8b949e; }
+  .nm { color: #f0db4f; }
+  .cls { color: #ffa657; }
+  .py-kw { color: #ff7b72; }
+  .py-fn { color: #d2a8ff; }
+  .py-str { color: #a5d6ff; }
+  .py-cm { color: #8b949e; }
+  .dj-kw { color: #79c0ff; }
+  .dj-cls { color: #ffa657; }
+  .dj-cm { color: #8b949e; }
+  .dj-str { color: #a5d6ff; }
+
+  /* ── ROADMAP ── */
+  .roadmap {
+    max-width: 800px;
+    margin: 4rem auto 0;
+  }
+
+  .roadmap-item {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    align-items: flex-start;
+  }
+
+  .roadmap-item:last-child { border-bottom: none; }
+
+  .roadmap-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: rgba(124,58,237,0.05);
+  }
+
+  .roadmap-content h4 {
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.3px;
+  }
+
+  .roadmap-content p {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .roadmap-tech {
+    display: inline-flex;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .rt-badge {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.63rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  /* ── STATS ── */
+  .stats-row {
+    display: flex;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    max-width: 900px;
+    margin: 4rem auto 0;
+  }
+
+  .stat {
+    flex: 1;
+    background: var(--surface);
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -2px;
+    margin-bottom: 0.4rem;
+    background: linear-gradient(135deg, var(--text), var(--muted));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: gap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  footer p {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem; }
+    .nav-links { display: none; }
+    .demo-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .stats-row { flex-direction: column; gap: 1px; }
+    footer { flex-direction: column; text-align: center; }
+  }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    text-align: center;
+    padding: 8rem 2rem;
+  }
+
+  .cta-box {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 4rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(124,58,237,0.1), transparent 70%);
+  }
+
+  .cta-box h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .cta-box p {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .btn-primary {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.82rem;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 0.8rem 1.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .btn-primary:hover { background: #6d28d9; transform: translateY(-2px); }
+
+  .btn-ghost {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.82rem;
+    background: none;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.8rem 1.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* center section headers */
+  .text-center { text-align: center; }
+  .text-center .section-desc { margin: 0 auto; }
+
+  /* scroll animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Dev<span>Learn</span></div>
+  <ul class="nav-links">
+    <li><a href="#technologies">Technologies</a></li>
+    <li><a href="#code-demo">Exemples</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#start">Commencer</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-orb"></div>
+  <div class="hero-badge">Plateforme d'apprentissage Web Full-Stack</div>
+  <h1>Devenez<br><em>Développeur</em><br>Full-Stack</h1>
+  <p>// Maîtrisez HTML, CSS, JavaScript, Python<br>et Django — de zéro à l'application complète.</p>
+  <div class="hero-stack">
+    <a href="#html" class="tech-pill pill-html">&lt;HTML5/&gt;</a>
+    <a href="#css" class="tech-pill pill-css">{CSS3}</a>
+    <a href="#js" class="tech-pill pill-js">JS ES2024</a>
+    <a href="#python" class="tech-pill pill-py">Python 3.x</a>
+    <a href="#django" class="tech-pill pill-dj">Django 5</a>
+  </div>
+  <a href="#technologies" class="hero-cta">▶ Explorer les technologies</a>
+</div>
+
+<!-- STATS -->
+<section style="padding: 2rem;">
+  <div class="stats-row reveal">
+    <div class="stat">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Technologies</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">120+</div>
+      <div class="stat-label">Exercices</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">40h</div>
+      <div class="stat-label">De Contenu</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Possibilités</div>
+    </div>
+  </div>
+</section>
+
+<!-- CARDS -->
+<section id="technologies" style="padding-top: 5rem;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="reveal text-center">
+      <div class="section-label">// Technologies</div>
+      <h2 class="section-title">Le Stack Complet</h2>
+      <p class="section-desc">Chaque technologie, expliquée avec des exemples concrets et des projets réels.</p>
+    </div>
+    <div class="cards-grid">
+
+      <a href="#html" class="card card-html reveal">
+        <div class="card-icon">HTML</div>
+        <div class="card-sub">01 — Fondations</div>
+        <h3>HTML 5</h3>
+        <p>La structure de chaque page Web. Sémantique, accessibilité, formulaires, médias et bonnes pratiques.</p>
+        <div class="card-topics">
+          <span class="topic-tag">Structure</span>
+          <span class="topic-tag">Sémantique</span>
+          <span class="topic-tag">Formulaires</span>
+          <span class="topic-tag">Médias</span>
+          <span class="topic-tag">SEO</span>
+        </div>
+      </a>
+
+      <a href="#css" class="card card-css reveal">
+        <div class="card-icon">CSS</div>
+        <div class="card-sub">02 — Design</div>
+        <h3>CSS 3</h3>
+        <p>Mise en forme, animations, Flexbox, Grid, variables CSS et design responsive pour tous les écrans.</p>
+        <div class="card-topics">
+          <span class="topic-tag">Flexbox</span>
+          <span class="topic-tag">Grid</span>
+          <span class="topic-tag">Animations</span>
+          <span class="topic-tag">Responsive</span>
+          <span class="topic-tag">Variables</span>
+        </div>
+      </a>
+
+      <a href="#js" class="card card-js reveal">
+        <div class="card-icon">JS</div>
+        <div class="card-sub">03 — Interactivité</div>
+        <h3>JavaScript</h3>
+        <p>DOM, événements, fetch API, async/await, modules ES6+ et manipulation dynamique des interfaces.</p>
+        <div class="card-topics">
+          <span class="topic-tag">DOM</span>
+          <span class="topic-tag">ES6+</span>
+          <span class="topic-tag">Fetch API</span>
+          <span class="topic-tag">Async/Await</span>
+          <span class="topic-tag">Modules</span>
+        </div>
+      </a>
+
+      <a href="#python" class="card card-py reveal">
+        <div class="card-icon">Py</div>
+        <div class="card-sub">04 — Backend</div>
+        <h3>Python 3</h3>
+        <p>Variables, fonctions, classes, fichiers, bibliothèques et scripts pour automatiser et traiter des données.</p>
+        <div class="card-topics">
+          <span class="topic-tag">Variables</span>
+          <span class="topic-tag">Classes OOP</span>
+          <span class="topic-tag">Fichiers</span>
+          <span class="topic-tag">Bibliothèques</span>
+          <span class="topic-tag">APIs</span>
+        </div>
+      </a>
+
+      <a href="#django" class="card card-dj reveal" style="grid-column: span 1;">
+        <div class="card-icon">Dj</div>
+        <div class="card-sub">05 — Framework & BDD</div>
+        <h3>Django 5</h3>
+        <p>Framework Python complet : modèles, vues, templates, ORM, authentification et base de données.</p>
+        <div class="card-topics">
+          <span class="topic-tag">ORM</span>
+          <span class="topic-tag">Models</span>
+          <span class="topic-tag">Views</span>
+          <span class="topic-tag">Templates</span>
+          <span class="topic-tag">Admin</span>
+          <span class="topic-tag">Auth</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- CODE DEMO -->
+<section id="code-demo">
+  <div class="demo-inner">
+    <div class="reveal">
+      <div class="section-label">// Exemples de code</div>
+      <h2 class="section-title">Voir pour<br>Comprendre</h2>
+      <p class="section-desc">Des extraits de code clairs pour chaque technologie. Cliquez sur les onglets pour explorer.</p>
+    </div>
+    <div class="reveal">
+      <div class="demo-tabs">
+        <button class="demo-tab active" onclick="showCode('html')">HTML</button>
+        <button class="demo-tab" onclick="showCode('css')">CSS</button>
+        <button class="demo-tab" onclick="showCode('js')">JS</button>
+        <button class="demo-tab" onclick="showCode('py')">Python</button>
+        <button class="demo-tab" onclick="showCode('dj')">Django</button>
+      </div>
+      <div class="code-window">
+        <div class="code-body active" id="code-html"><span class="cm">&lt;!-- Structure HTML sémantique --&gt;</span>
+<span class="kw">&lt;!DOCTYPE</span> <span class="fn">html</span><span class="kw">&gt;</span>
+<span class="kw">&lt;html</span> <span class="fn">lang</span>=<span class="str">"fr"</span><span class="kw">&gt;</span>
+<span class="kw">&lt;head&gt;</span>
+  <span class="kw">&lt;meta</span> <span class="fn">charset</span>=<span class="str">"UTF-8"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;title&gt;</span>Ma Page Web<span class="kw">&lt;/title&gt;</span>
+<span class="kw">&lt;/head&gt;</span>
+<span class="kw">&lt;body&gt;</span>
+  <span class="kw">&lt;header&gt;</span>
+    <span class="kw">&lt;h1&gt;</span>Bienvenue !<span class="kw">&lt;/h1&gt;</span>
+    <span class="kw">&lt;nav&gt;</span>...<span class="kw">&lt;/nav&gt;</span>
+  <span class="kw">&lt;/header&gt;</span>
+  <span class="kw">&lt;main&gt;</span>
+    <span class="kw">&lt;article&gt;</span>
+      <span class="kw">&lt;p&gt;</span>Contenu principal.<span class="kw">&lt;/p&gt;</span>
+    <span class="kw">&lt;/article&gt;</span>
+  <span class="kw">&lt;/main&gt;</span>
+  <span class="kw">&lt;footer&gt;</span>© 2025<span class="kw">&lt;/footer&gt;</span>
+<span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></div>
+
+        <div class="code-body" id="code-css"><span class="cm">/* CSS moderne avec variables */</span>
+<span class="fn">:root</span> {
+  <span class="kw">--primary</span>: <span class="str">#7c3aed</span>;
+  <span class="kw">--bg</span>: <span class="str">#0a0a0f</span>;
+  <span class="kw">--text</span>: <span class="str">#e8e8f0</span>;
+}
+
+<span class="fn">.container</span> {
+  <span class="kw">display</span>: <span class="nm">grid</span>;
+  <span class="kw">grid-template-columns</span>: <span class="nm">repeat(3, 1fr)</span>;
+  <span class="kw">gap</span>: <span class="nm">1.5rem</span>;
+  <span class="kw">padding</span>: <span class="nm">2rem</span>;
+}
+
+<span class="fn">.card</span> {
+  <span class="kw">background</span>: <span class="nm">var(--bg)</span>;
+  <span class="kw">border-radius</span>: <span class="nm">12px</span>;
+  <span class="kw">transition</span>: <span class="nm">transform 0.3s</span>;
+}
+
+<span class="fn">.card:hover</span> {
+  <span class="kw">transform</span>: <span class="nm">translateY(-4px)</span>;
+  <span class="kw">box-shadow</span>: <span class="nm">0 20px 40px rgba(0,0,0,0.3)</span>;
+}</div>
+
+        <div class="code-body" id="code-js"><span class="cm">// JavaScript moderne — Fetch API</span>
+<span class="kw">const</span> <span class="fn">fetchData</span> = <span class="kw">async</span> () => {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> response = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">'/api/articles'</span>);
+    <span class="kw">const</span> data = <span class="kw">await</span> response.<span class="fn">json</span>();
+
+    data.<span class="fn">forEach</span>(article => {
+      <span class="kw">const</span> card = document.<span class="fn">createElement</span>(<span class="str">'div'</span>);
+      card.className = <span class="str">'card'</span>;
+      card.innerHTML = <span class="str">`
+        &lt;h3&gt;${article.title}&lt;/h3&gt;
+        &lt;p&gt;${article.excerpt}&lt;/p&gt;
+      `</span>;
+      document.<span class="fn">querySelector</span>(<span class="str">'.grid'</span>)
+        .<span class="fn">appendChild</span>(card);
+    });
+  } <span class="kw">catch</span> (err) {
+    console.<span class="fn">error</span>(<span class="str">'Erreur:'</span>, err);
+  }
+};
+
+<span class="fn">fetchData</span>();</div>
+
+        <div class="code-body" id="code-py"><span class="py-cm"># Python 3 — Classe et méthodes</span>
+<span class="py-kw">class</span> <span class="cls">Article</span>:
+    <span class="py-kw">def</span> <span class="py-fn">__init__</span>(self, titre, contenu):
+        self.titre = titre
+        self.contenu = contenu
+        self.vues = <span class="nm">0</span>
+
+    <span class="py-kw">def</span> <span class="py-fn">afficher</span>(self):
+        <span class="py-kw">return</span> <span class="py-str">f"📄 {self.titre} ({self.vues} vues)"</span>
+
+    <span class="py-kw">def</span> <span class="py-fn">incrementer_vues</span>(self):
+        self.vues += <span class="nm">1</span>
+
+
+<span class="py-cm"># Utilisation</span>
+article = <span class="cls">Article</span>(
+    titre=<span class="py-str">"Apprendre Python"</span>,
+    contenu=<span class="py-str">"Python est simple..."</span>
+)
+
+article.<span class="py-fn">incrementer_vues</span>()
+<span class="py-kw">print</span>(article.<span class="py-fn">afficher</span>())
+<span class="py-cm"># → 📄 Apprendre Python (1 vues)</span></div>
+
+        <div class="code-body" id="code-dj"><span class="dj-cm"># Django — Modèle, Vue, URL</span>
+
+<span class="dj-cm"># models.py</span>
+<span class="dj-kw">from</span> django.db <span class="dj-kw">import</span> models
+
+<span class="dj-kw">class</span> <span class="dj-cls">Article</span>(models.Model):
+    titre = models.<span class="dj-cls">CharField</span>(max_length=<span class="nm">200</span>)
+    contenu = models.<span class="dj-cls">TextField</span>()
+    date = models.<span class="dj-cls">DateTimeField</span>(auto_now_add=<span class="nm">True</span>)
+
+    <span class="dj-kw">def</span> <span class="dj-cls">__str__</span>(self):
+        <span class="dj-kw">return</span> self.titre
+
+<span class="dj-cm"># views.py</span>
+<span class="dj-kw">from</span> django.shortcuts <span class="dj-kw">import</span> render
+<span class="dj-kw">from</span> .models <span class="dj-kw">import</span> Article
+
+<span class="dj-kw">def</span> <span class="dj-cls">liste_articles</span>(request):
+    articles = Article.objects.<span class="dj-cls">all</span>()
+    <span class="dj-kw">return</span> render(request,
+        <span class="dj-str">'articles/liste.html'</span>,
+        {<span class="dj-str">'articles'</span>: articles}
+    )
+
+<span class="dj-cm"># urls.py</span>
+path(<span class="dj-str">'articles/'</span>, views.liste_articles)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="reveal text-center">
+      <div class="section-label">// Parcours</div>
+      <h2 class="section-title">Votre Roadmap</h2>
+      <p class="section-desc">Un parcours progressif pour passer du débutant au développeur Full-Stack opérationnel.</p>
+    </div>
+    <div class="roadmap">
+
+      <div class="roadmap-item reveal">
+        <div class="roadmap-num">01</div>
+        <div class="roadmap-content">
+          <h4>Les bases du Web</h4>
+          <p>Apprenez HTML pour structurer vos pages et CSS pour les mettre en forme. Créez vos premières pages statiques responsives.</p>
+          <div class="roadmap-tech">
+            <span class="rt-badge" style="background:rgba(227,76,38,0.1);color:var(--html)">HTML5</span>
+            <span class="rt-badge" style="background:rgba(38,77,228,0.1);color:var(--css)">CSS3</span>
+            <span class="rt-badge" style="background:rgba(38,77,228,0.08);color:#7b9fd4">Flexbox & Grid</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal">
+        <div class="roadmap-num">02</div>
+        <div class="roadmap-content">
+          <h4>Interactivité avec JavaScript</h4>
+          <p>Ajoutez de la dynamique : manipulation du DOM, gestion d'événements, requêtes API et logique client-side.</p>
+          <div class="roadmap-tech">
+            <span class="rt-badge" style="background:rgba(240,219,79,0.1);color:var(--js)">JavaScript ES6+</span>
+            <span class="rt-badge" style="background:rgba(240,219,79,0.08);color:#c5b03f">DOM API</span>
+            <span class="rt-badge" style="background:rgba(240,219,79,0.08);color:#c5b03f">Fetch / Async</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal">
+        <div class="roadmap-num">03</div>
+        <div class="roadmap-content">
+          <h4>Programmation Python</h4>
+          <p>Maîtrisez Python : syntaxe, structures de données, POO, fichiers et modules. La base du backend.</p>
+          <div class="roadmap-tech">
+            <span class="rt-badge" style="background:rgba(55,118,171,0.1);color:#5a9fd4">Python 3</span>
+            <span class="rt-badge" style="background:rgba(55,118,171,0.08);color:#4a8ab4">POO</span>
+            <span class="rt-badge" style="background:rgba(55,118,171,0.08);color:#4a8ab4">Modules</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal">
+        <div class="roadmap-num">04</div>
+        <div class="roadmap-content">
+          <h4>Django & Base de données</h4>
+          <p>Construisez une application Web complète avec Django : ORM, modèles de données, authentification et panel admin.</p>
+          <div class="roadmap-tech">
+            <span class="rt-badge" style="background:rgba(68,183,139,0.1);color:var(--dj2)">Django 5</span>
+            <span class="rt-badge" style="background:rgba(68,183,139,0.08);color:#3a9970">SQLite / PostgreSQL</span>
+            <span class="rt-badge" style="background:rgba(68,183,139,0.08);color:#3a9970">ORM</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item reveal">
+        <div class="roadmap-num">05</div>
+        <div class="roadmap-content">
+          <h4>Projet Full-Stack Final</h4>
+          <p>Combinez toutes les technologies pour créer un projet complet : blog, e-commerce, ou application de gestion.</p>
+          <div class="roadmap-tech">
+            <span class="rt-badge" style="background:rgba(124,58,237,0.1);color:#a78bfa">Full-Stack</span>
+            <span class="rt-badge" style="background:rgba(124,58,237,0.08);color:#9b7ee8">Déploiement</span>
+            <span class="rt-badge" style="background:rgba(124,58,237,0.08);color:#9b7ee8">Production</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="start" class="cta-section">
+  <div class="cta-box reveal">
+    <h2>Prêt à coder ?</h2>
+    <p>Commencez votre parcours aujourd'hui. Aucune expérience requise — juste de la curiosité et de la motivation.</p>
+    <div class="btn-group">
+      <a href="#technologies" class="btn-primary">→ Commencer gratuitement</a>
+      <a href="#roadmap" class="btn-ghost">Voir la roadmap</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Dev<span>Learn</span></div>
+  <p>© 2025 DevLearn — HTML · CSS · JS · Python · Django</p>
+  <ul class="footer-links">
+    <li><a href="#">Documentation</a></li>
+    <li><a href="#">Exercices</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Tab switcher
+  function showCode(lang) {
+    document.querySelectorAll('.code-body').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.demo-tab').forEach(el => el.classList.remove('active'));
+    document.getElementById('code-' + lang).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Smooth pill scroll
+  document.querySelectorAll('.tech-pill').forEach(pill => {
+    pill.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector('#technologies').scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
